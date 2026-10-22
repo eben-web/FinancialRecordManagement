@@ -1,163 +1,155 @@
-﻿<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4F7FC"
-    android:fillViewport="true">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
-
-        <TextView
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="20dp"
-            android:text="‹  Back to Dashboard"
-            android:textColor="#142F6B"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Transaction"
-            android:textColor="#142F6B"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Record your income or expenses."
-            android:textColor="#69758B"
-            android:textSize="15sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="#FFFFFF">
+            android:padding="24dp"
+            android:paddingTop="40dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TRANSACTION TYPE"
-                android:textColor="#69758B"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/transactionTypeGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/incomeRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:buttonTint="#168F5B"
-                    android:text="Income"
-                    android:textColor="#168F5B"
-                    android:textSize="15sp" />
-
-                <RadioButton
-                    android:id="@+id/expenseRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="#CD3C46"
-                    android:text="Expense"
-                    android:textColor="#CD3C46"
-                    android:textSize="15sp" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="DESCRIPTION"
-                android:textColor="#69758B"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/descriptionInput"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#D5DDEB"
-                android:hint="e.g. Salary, groceries, transport"
-                android:inputType="textCapSentences"
-                android:padding="12dp"
+                android:text="Add Transaction"
                 android:textColor="#142F6B"
-                android:textColorHint="#8994A8"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Record your income or expenses."
+                android:textColor="#69758B"
                 android:textSize="15sp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="AMOUNT (KSh)"
-                android:textColor="#69758B"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <EditText
-                android:id="@+id/amountInput"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#D5DDEB"
-                android:hint="0.00"
-                android:inputType="numberDecimal"
-                android:padding="12dp"
-                android:textColor="#142F6B"
-                android:textColorHint="#8994A8"
-                android:textSize="18sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TRANSACTION TYPE"
+                    android:textColor="#69758B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Enter an amount greater than zero."
-                android:textColor="#8994A8"
-                android:textSize="12sp" />
+                <RadioGroup
+                    android:id="@+id/transactionTypeGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/saveTransactionButton"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="28dp"
-                android:backgroundTint="#142F6B"
-                android:text="Save Transaction"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/incomeRadio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="Income"
+                        android:textColor="#168F5B" />
 
+                    <RadioButton
+                        android:id="@+id/expenseRadio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Expense"
+                        android:textColor="#CD3C46" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="DESCRIPTION"
+                    android:textColor="#69758B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/descriptionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="e.g. Salary, groceries, transport"
+                    android:inputType="textCapSentences"
+                    android:maxLength="100"
+                    android:textColor="#142F6B" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="AMOUNT (KSh)"
+                    android:textColor="#69758B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/amountInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:textColor="#142F6B" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="CATEGORY"
+                    android:textColor="#69758B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="DATE (tap to change)"
+                    android:textColor="#69758B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F4F7FC"
+                    android:padding="12dp"
+                    android:textColor="#142F6B"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/saveTransactionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Save Transaction" />
+
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:gravity="center"
-            android:text="Keep your financial records accurate and up to date."
-            android:textColor="#69758B"
-            android:textSize="13sp" />
+    <include layout="@layout/bottom_nav" />
 
-    </LinearLayout>
-
-</ScrollView>
-
+</LinearLayout>

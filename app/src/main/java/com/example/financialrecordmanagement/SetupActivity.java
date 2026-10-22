@@ -1,17 +1,17 @@
-
 package com.example.financialrecordmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// Asks for the user's name
 public class SetupActivity extends AppCompatActivity {
 
     private EditText nameInput;
-    private Button continueButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,27 +19,24 @@ public class SetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
 
         nameInput = findViewById(R.id.nameInput);
-        continueButton = findViewById(R.id.continueButton);
+        Button continueButton = findViewById(R.id.continueButton);
 
-        continueButton.setOnClickListener(v -> {
-            String name = nameInput.getText().toString().trim();
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameInput.getText().toString().trim();
 
-            if (name.isEmpty()) {
-                nameInput.setError("Please enter your name");
-                nameInput.requestFocus();
-                return;
+                if (name.isEmpty()) {
+                    nameInput.setError("Please enter your name");
+                    return;
+                }
+
+                Intent intent = new Intent(SetupActivity.this, PinActivity.class);
+                intent.putExtra("CREATE_PIN", true);
+                intent.putExtra("USER_NAME", name);
+                startActivity(intent);
+                finish();
             }
-
-            Intent intent = new Intent(
-                    SetupActivity.this,
-                    PinActivity.class
-            );
-
-            intent.putExtra("CREATE_PIN", true);
-            intent.putExtra("USER_NAME", name);
-
-            startActivity(intent);
-            finish();
         });
     }
 }

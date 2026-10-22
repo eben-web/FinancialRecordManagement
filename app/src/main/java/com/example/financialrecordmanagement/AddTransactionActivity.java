@@ -1,28 +1,34 @@
-
 package com.example.financialrecordmanagement;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
+// Screen for recording a new income or expense
 public class AddTransactionActivity extends AppCompatActivity {
 
     private EditText descriptionInput;
     private EditText amountInput;
-    private RadioGroup transactionTypeGroup;
-    private Button saveButton;
-    private TextView backButton;
+    private RadioGroup typeGroup;
+    private Spinner categorySpinner;
+    private TextView dateText;
 
     private TransactionStorage storage;
+    private Calendar selectedDate = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,98 +39,97 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         descriptionInput = findViewById(R.id.descriptionInput);
         amountInput = findViewById(R.id.amountInput);
-        transactionTypeGroup = findViewById(R.id.transactionTypeGroup);
-        saveButton = findViewById(R.id.saveTransactionButton);
-        backButton = findViewById(R.id.backButton);
+        typeGroup = findViewById(R.id.transactionTypeGroup);
+        categorySpinner = findViewById(R.id.categorySpinner);
+        dateText = findViewById(R.id.dateText);
+        Button saveButton = findViewById(R.id.saveTransactionButton);
 
-        // Limit description length to keep records readable.
-        descriptionInput.setFilters(
-                new InputFilter[]{new InputFilter.LengthFilter(100)}
-        );
+        BottomNav.setup(this, BottomNav.ADD);
 
-        backButton.setOnClickListener(v -> finish());
+        // Fill the category drop-down
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                TransactionStorage.CATEGORIES);
+        categorySpinner.setAdapter(adapter);
 
-        saveButton.setOnClickListener(v -> saveTransaction());
+        // Show today's date and let the user pick another one
+        showDate();
+        dateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePicker();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveTransaction();
+            }
+        });
+    }
+
+    private void showDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        dateText.setText(format.format(selectedDate.getTime()));
+    }
+
+    private void openDatePicker() {
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                selectedDate.set(year, month, day);
+                showDate();
+            }
+        };
+
+        new DatePickerDialog(this, listener,
+                selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH),
+                selectedDate.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void saveTransaction() {
-        String description =
-                descriptionInput.getText().toString().trim();
-
-        String amountText =
-                amountInput.getText().toString().trim();
+        String description = descriptionInput.getText().toString().trim();
+        String amountText = amountInput.getText().toString().trim();
 
         if (description.isEmpty()) {
-            descriptionInput.setError("Enter a transaction description");
-            descriptionInput.requestFocus();
+            descriptionInput.setError("Enter a description");
             return;
         }
 
         if (amountText.isEmpty()) {
             amountInput.setError("Enter an amount");
-            amountInput.requestFocus();
             return;
         }
 
-        double amount;
-
+        double amount = 0;
         try {
             amount = Double.parseDouble(amountText);
         } catch (NumberFormatException e) {
             amountInput.setError("Enter a valid amount");
-            amountInput.requestFocus();
             return;
         }
 
-        if (!Double.isFinite(amount) || amount <= 0) {
-            amountInput.setError("Amount must be greater than zero");
-            amountInput.requestFocus();
+        if (amount <= 0) {
+            amountInput.setError("Amount must be more than zero");
             return;
         }
 
-        // Limit amounts to two decimal places.
-        if (Math.abs(amount * 100.0 - Math.rint(amount * 100.0)) > 0.000001) {
-            amountInput.setError("Use no more than 2 decimal places");
-            amountInput.requestFocus();
-            return;
-        }
-
-        String type;
-
-        if (transactionTypeGroup.getCheckedRadioButtonId()
-                == R.id.incomeRadio) {
+        String type = "EXPENSE";
+        if (typeGroup.getCheckedRadioButtonId() == R.id.incomeRadio) {
             type = "INCOME";
-        } else if (transactionTypeGroup.getCheckedRadioButtonId()
-                == R.id.expenseRadio) {
-            type = "EXPENSE";
-        } else {
-            Toast.makeText(
-                    this,
-                    "Select Income or Expense",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
         }
 
-        /*
-         * Use the storage method already provided by your project.
-         * This overload assumes TransactionStorage has:
-         * addTransaction(String description, double amount, String type)
-         */
-        storage.addTransaction(description, amount, type);
+        String category = categorySpinner.getSelectedItem().toString();
 
-        Toast.makeText(
-                this,
-                String.format(
-                        Locale.getDefault(),
-                        "%s saved: KSh %,.2f",
-                        type.equals("INCOME") ? "Income" : "Expense",
-                        amount
-                ),
-                Toast.LENGTH_LONG
-        ).show();
+        storage.addTransaction(description, amount, type, category,
+                selectedDate.getTimeInMillis());
 
-        setResult(RESULT_OK);
-        finish();
+        Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show();
+
+        // Clear the form so another one can be added
+        descriptionInput.setText("");
+        amountInput.setText("");
     }
 }

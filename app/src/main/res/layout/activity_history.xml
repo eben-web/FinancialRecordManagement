@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F7FC"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingTop="40dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transaction History"
+            android:textColor="#142F6B"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Tap a transaction to amend it."
+            android:textColor="#69758B"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search descriptions..."
+            android:inputType="text"
+            android:textColor="#142F6B" />
+
+        <RadioGroup
+            android:id="@+id/typeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/allRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="All" />
+
+            <RadioButton
+                android:id="@+id/incomeRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Income" />
+
+            <RadioButton
+                android:id="@+id/expenseRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Expense" />
+        </RadioGroup>
+
+        <Spinner
+            android:id="@+id/categoryFilter"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+
+        <Button
+            android:id="@+id/applyFilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#142F6B"
+            android:text="Apply Filter"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/resultCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#69758B"
+            android:textSize="13sp" />
+
+        <ListView
+            android:id="@+id/transactionList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <include layout="@layout/bottom_nav" />
+
+</LinearLayout>
